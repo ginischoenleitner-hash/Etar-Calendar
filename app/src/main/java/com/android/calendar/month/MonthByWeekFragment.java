@@ -17,6 +17,7 @@
 package com.android.calendar.month;
 
 import android.app.Activity;
+import com.android.calendar.cycle.CycleActions;
 import android.content.ContentUris;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -149,8 +150,12 @@ public class MonthByWeekFragment extends SimpleDayPickerFragment implements
             final FragmentManager manager = getParentFragmentManager();
             if (manager != null) {
                 Time day = (Time) msg.obj;
-                mEventDialog = new CreateEventDialogFragment(day);
-                mEventDialog.show(manager, TAG_EVENT_DIALOG);
+                int julianDay = Time.getJulianDay(day.toMillis(), day.getGmtOffset());
+                // with cycle tracking enabled, offer marking a period start next to creating an event
+                CycleActions.showLongPressActions(requireContext(), julianDay, null, () -> {
+                    mEventDialog = new CreateEventDialogFragment(day);
+                    mEventDialog.show(manager, TAG_EVENT_DIALOG);
+                });
             }
         }
     };

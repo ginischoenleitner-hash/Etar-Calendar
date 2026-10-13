@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <SwitchPreference
+        app:defaultValue="false"
+        app:iconSpaceReserved="false"
+        app:key="cycle_tracking_enabled"
+        app:summary="@string/cycle_tracking_summary"
+        app:title="@string/cycle_tracking" />
+
+    <ListPreference
+        app:dialogTitle="@string/cycle_length"
+        app:iconSpaceReserved="false"
+        app:key="cycle_length"
+        app:title="@string/cycle_length" />
+
+    <Preference
+        app:iconSpaceReserved="false"
+        app:key="cycle_period_starts_screen"
+        app:persistent="false"
+        app:title="@string/cycle_period_starts" />
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:key="cycle_phase_colors_category"
+        app:title="@string/cycle_phase_colors" />
+
+</PreferenceScreen>

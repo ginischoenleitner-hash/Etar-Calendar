@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cycle">Cycle</string>
+    <string name="cycle_summary">Show menstrual cycle phases in the calendar</string>
+    <string name="cycle_tracking">Show cycle phases</string>
+    <string name="cycle_tracking_summary">Long press a day in the calendar to mark the first day of a period</string>
+    <string name="cycle_length">Cycle length</string>
+    <string name="cycle_period_starts">Recorded period starts</string>
+    <string name="cycle_phase_colors">Phase colors</string>
+    <string name="cycle_no_period_starts">None yet – long press a day in the calendar</string>
+    <string name="cycle_add_period_start">Add</string>
+    <string name="cycle_mark_period_start">Period starts on this day</string>
+    <string name="cycle_remove_period_start">Remove period start</string>
+    <string name="cycle_period_start_added">Period start saved</string>
+    <string name="cycle_period_start_removed">Period start removed</string>
+    <string name="cycle_day_label">Cycle day %1$d</string>
+    <plurals name="cycle_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
+    <string name="cycle_phase_menstruation">Menstruation</string>
+    <string name="cycle_phase_follicular">Follicular phase</string>
+    <string name="cycle_phase_ovulation">Ovulation</string>
+    <string name="cycle_phase_luteal">Luteal phase</string>
+    <string name="cycle_phase_pms">PMS phase</string>
+    <dimen name="cycle_color_swatch_size">28dp</dimen>
+</resources>

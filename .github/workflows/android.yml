@@ -27,11 +27,16 @@ jobs:
             ${{ runner.os }}-gradle-
       - name: Validate Gradle Wrapper
         uses: gradle/actions/wrapper-validation@v6
+      # Always sign with the same debug key, so a new APK can be installed over the old one without losing data
+      - name: Use fixed debug signing key
+        run: |
+          mkdir -p ~/.android
+          cp .github/zyklus-debug.keystore ~/.android/debug.keystore
       - name: Build with Gradle
         run: |
           ./gradlew :app:assembleDebug
       - name: Upload APK
         uses: actions/upload-artifact@v7
         with:
-          name: Etar_apk
+          name: etar-zyklus-apk
           path: app/build/outputs/apk/debug/app-debug.apk

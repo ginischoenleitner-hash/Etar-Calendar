@@ -17,6 +17,7 @@
 package com.android.calendar.widget;
 
 import android.app.AlarmManager;
+import com.android.calendar.cycle.CycleHelper;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
@@ -278,6 +279,9 @@ public class CalendarAppWidgetService extends RemoteViewsService {
                         R.layout.appwidget_day);
                 DayInfo dayInfo = mModel.mDayInfos.get(rowInfo.mIndex);
                 updateTextView(views, R.id.date, View.VISIBLE, dayInfo.mDayLabel);
+                // menstrual cycle phase as a pastel background of the day header
+                int cycleColor = CycleHelper.getDayBackgroundColor(mContext, dayInfo.mJulianDay);
+                views.setInt(R.id.appwidget_date, "setBackgroundColor", cycleColor);
                 return views;
             } else {
                 RemoteViews views;

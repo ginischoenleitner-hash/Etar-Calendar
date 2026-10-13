@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="cycle">Zyklus</string>
+    <string name="cycle_summary">Zyklusphasen im Kalender anzeigen</string>
+    <string name="cycle_tracking">Zyklusphasen anzeigen</string>
+    <string name="cycle_tracking_summary">Lange auf einen Tag im Kalender tippen, um einen Blutungsbeginn einzutragen</string>
+    <string name="cycle_length">Zyklusdauer</string>
+    <string name="cycle_period_starts">Eingetragene Blutungsbeginne</string>
+    <string name="cycle_phase_colors">Phasenfarben</string>
+    <string name="cycle_no_period_starts">Noch keine – lange auf einen Tag im Kalender tippen</string>
+    <string name="cycle_add_period_start">Hinzufügen</string>
+    <string name="cycle_mark_period_start">Periode beginnt an diesem Tag</string>
+    <string name="cycle_remove_period_start">Blutungsbeginn entfernen</string>
+    <string name="cycle_period_start_added">Blutungsbeginn gespeichert</string>
+    <string name="cycle_period_start_removed">Blutungsbeginn entfernt</string>
+    <string name="cycle_day_label">Zyklustag %1$d</string>
+    <plurals name="cycle_days">
+        <item quantity="one">%d Tag</item>
+        <item quantity="other">%d Tage</item>
+    </plurals>
+    <string name="cycle_phase_menstruation">Menstruation</string>
+    <string name="cycle_phase_follicular">Follikelphase</string>
+    <string name="cycle_phase_ovulation">Eisprung</string>
+    <string name="cycle_phase_luteal">Lutealphase</string>
+    <string name="cycle_phase_pms">PMS-Phase</string>
+</resources>

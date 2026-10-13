@@ -17,6 +17,7 @@
 package com.android.calendar.month;
 
 import android.animation.Animator;
+import com.android.calendar.cycle.CycleHelper;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.app.Service;
@@ -560,6 +561,10 @@ public class MonthWeekEventsView extends SimpleWeekView {
             p.setColor(mMonthBGOtherColor);
             canvas.drawRect(r, p);
         }
+        // cycle phases go on top of the month background, but below the today highlight
+        drawCycleBackgrounds(canvas);
+        r.top = mDaySeparatorInnerWidth;
+        r.bottom = mHeight;
         if (mHasToday) {
             int selectedColor = ContextCompat.getColor(mContext, DynamicThemeKt.getColorId(DynamicThemeKt.getPrimaryColor(mContext)));
 
@@ -573,6 +578,26 @@ public class MonthWeekEventsView extends SimpleWeekView {
             r.right = computeDayLeftPosition(mTodayIndex + 1);
             canvas.drawRect(r, p);
         }
+    }
+
+    // Fills every day with the pastel color of its menstrual cycle phase
+    private void drawCycleBackgrounds(Canvas canvas) {
+        int alpha = p.getAlpha();
+        r.top = mDaySeparatorInnerWidth;
+        r.bottom = mHeight;
+        for (int day = 0; day < mNumDays; day++) {
+            int color = CycleHelper.getDayBackgroundColor(mContext, mFirstJulianDay + day);
+            if (color == 0) {
+                continue;
+            }
+            boolean isFocusMonth = day + (mShowWeekNum ? 1 : 0) < mFocusDay.length
+                    && mFocusDay[day + (mShowWeekNum ? 1 : 0)];
+            p.setColor(isFocusMonth ? color : CycleHelper.withAlpha(color, 0.5f));
+            r.left = computeDayLeftPosition(day);
+            r.right = computeDayLeftPosition(day + 1);
+            canvas.drawRect(r, p);
+        }
+        p.setAlpha(alpha);
     }
 
     // Draw the "clicked" color on the tapped day

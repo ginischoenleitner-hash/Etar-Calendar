@@ -17,6 +17,7 @@
 package com.android.calendar.agenda;
 
 import android.content.Context;
+import com.android.calendar.cycle.CycleHelper;
 import android.database.Cursor;
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -242,6 +243,12 @@ public class AgendaByDayAdapter extends BaseAdapter {
             } else {
                 agendaDayView.setBackgroundResource(DynamicThemeKt.getDrawableId(mContext, "agenda_item_bg_secondary"));
                 holder.grayed = true;
+            }
+
+            // menstrual cycle phase as a pastel background of the day header
+            int cycleColor = CycleHelper.getDayBackgroundColor(mContext, row.mDay);
+            if (cycleColor != 0) {
+                agendaDayView.setBackgroundColor(cycleColor);
             }
             return agendaDayView;
         } else if (row.mType == TYPE_MEETING) {

@@ -38,6 +38,11 @@
             app:entries="@array/default_start_entries"
             app:entryValues="@array/default_start_values" />
         <Preference
+            app:key="pref_cycle"
+            app:title="@string/cycle"
+            app:summary="@string/cycle_summary"
+            app:fragment="com.android.calendar.cycle.CyclePreferences" />
+        <Preference
             app:key="pref_view_details"
             app:title="@string/display_options"
             app:fragment="com.android.calendar.settings.ViewDetailsPreferences" />

@@ -17,6 +17,8 @@
 package com.android.calendar;
 
 import android.animation.Animator;
+import com.android.calendar.cycle.CycleActions;
+import com.android.calendar.cycle.CycleHelper;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
@@ -2356,6 +2358,8 @@ public class DayView extends View implements View.OnCreateContextMenuListener,
             }
         }
 
+        drawCycleHeaderBackgrounds(r, canvas, p);
+
         if (mSelectionAllday && mSelectionMode != SELECTION_HIDDEN) {
             // Draw the selection highlight on the selected all-day area
             mRect.top = DAY_HEADER_HEIGHT + 1;
@@ -2445,6 +2449,7 @@ public class DayView extends View implements View.OnCreateContextMenuListener,
         if (mFutureBgColor != 0) {
             drawBgColors(r, canvas, p);
         }
+        drawCycleBackgrounds(r, canvas, p);
         drawGridBackground(r, canvas, p);
 
         // Draw each day
@@ -2616,6 +2621,45 @@ public class DayView extends View implements View.OnCreateContextMenuListener,
             p.setTextSize(DATE_HEADER_FONT_SIZE);
             p.setTypeface(todayIndex == day ? mBold : Typeface.DEFAULT);
             canvas.drawText(dateNumStr, x, y, p);
+        }
+    }
+
+    // Tints every day column with the pastel color of its menstrual cycle phase
+    private void drawCycleBackgrounds(Rect r, Canvas canvas, Paint p) {
+        Paint.Style savedStyle = p.getStyle();
+        int savedColor = p.getColor();
+        p.setStyle(Style.FILL);
+        r.top = 0;
+        r.bottom = HOUR_GAP + 24 * (mCellHeight + HOUR_GAP);
+        for (int day = 0; day < mNumDays; day++) {
+            int color = CycleHelper.getDayBackgroundColor(mContext, mFirstJulianDay + day);
+            if (color == 0) {
+                continue;
+            }
+            // a lighter tint than the header, so the hour grid and events stay readable
+            p.setColor(CycleHelper.withAlpha(color, 0.5f));
+            r.left = computeDayLeftPosition(day) + 1;
+            r.right = computeDayLeftPosition(day + 1);
+            canvas.drawRect(r, p);
+        }
+        p.setStyle(savedStyle);
+        p.setColor(savedColor);
+    }
+
+    // Tints the date header and all-day area of every day with its cycle phase color
+    private void drawCycleHeaderBackgrounds(Rect r, Canvas canvas, Paint p) {
+        p.setStyle(Style.FILL);
+        r.top = 0;
+        r.bottom = mFirstCell - 1;
+        for (int day = 0; day < mNumDays; day++) {
+            int color = CycleHelper.getDayBackgroundColor(mContext, mFirstJulianDay + day);
+            if (color == 0) {
+                continue;
+            }
+            p.setColor(color);
+            r.left = computeDayLeftPosition(day) + 1;
+            r.right = computeDayLeftPosition(day + 1);
+            canvas.drawRect(r, p);
         }
     }
 
@@ -5054,6 +5098,19 @@ public class DayView extends View implements View.OnCreateContextMenuListener,
             flags |= DateUtils.FORMAT_24HOUR;
         }
         mLongPressTitle = Utils.formatDateRange(mContext, time, time, flags);
+        if (CycleHelper.isEnabled(mContext)) {
+            // offer marking a period start next to creating an event
+            CycleActions.showLongPressActions(mContext, mSelectionDay, mLongPressTitle, () -> {
+                long extraLong = 0;
+                if (mSelectionAllday) {
+                    extraLong = CalendarController.EXTRA_CREATE_ALL_DAY;
+                }
+                mController.sendEventRelatedEventWithExtra(this,
+                        EventType.CREATE_EVENT, -1, getSelectedTimeInMillis(), 0, -1,
+                        -1, extraLong, -1);
+            });
+            return true;
+        }
         new MaterialAlertDialogBuilder(mContext)
                 .setTitle(mLongPressTitle)
                 .setItems(mLongPressItems, new DialogInterface.OnClickListener() {
