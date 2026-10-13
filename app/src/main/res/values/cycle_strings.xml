@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="cycle_app_label" translatable="false">Etar Zyklus</string>
     <string name="cycle">Cycle</string>
     <string name="cycle_summary">Show menstrual cycle phases in the calendar</string>
     <string name="cycle_tracking">Show cycle phases</string>
